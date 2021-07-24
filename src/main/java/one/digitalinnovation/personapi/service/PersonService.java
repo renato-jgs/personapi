@@ -17,7 +17,7 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    public MessageResponseDTO createPerson(@RequestBody Person person) {
+    public MessageResponseDTO createPerson(Person person) {
         Person savedPerson = personRepository.save(person);
         return MessageResponseDTO.builder().message("Create person with ID: " + savedPerson.getId()).build();
     }

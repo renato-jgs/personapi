@@ -1,14 +1,17 @@
 package one.digitalinnovation.personapi.service;
 
 import lombok.var;
+
 import one.digitalinnovation.personapi.dto.request.PersonDTO;
 import one.digitalinnovation.personapi.dto.response.MessageResponseDTO;
 import one.digitalinnovation.personapi.entity.Person;
 import one.digitalinnovation.personapi.exception.PersonNotFoundException;
 import one.digitalinnovation.personapi.mapper.PersonMapper;
 import one.digitalinnovation.personapi.repository.PersonRepository;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,9 +20,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static one.digitalinnovation.personapi.utils.PersonUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static one.digitalinnovation.personapi.utils.PersonUtils.createFakeDTO;
+import static one.digitalinnovation.personapi.utils.PersonUtils.createFakeEntity;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class PersonServiceTest {
@@ -58,7 +67,6 @@ public class PersonServiceTest {
         PersonDTO personDTO = personService.findById(expectedSavedPerson.getId());
 
         assertEquals(expectedPersonDTO, personDTO);
-
         assertEquals(expectedSavedPerson.getId(), personDTO.getId());
         assertEquals(expectedSavedPerson.getFirstName(), personDTO.getFirstName());
     }
@@ -101,7 +109,6 @@ public class PersonServiceTest {
         expectedPersonToUpdate.setLastName(updatePersonDTORequest.getLastName());
 
         when(personRepository.findById(updatedPersonId)).thenReturn(Optional.of(expectedPersonUpdated));
-        when(personMapper.toModel(updatePersonDTORequest)).thenReturn(expectedPersonUpdated);
         when(personRepository.save(any(Person.class))).thenReturn(expectedPersonUpdated);
 
         MessageResponseDTO successMessage = personService.update(updatedPersonId, updatePersonDTORequest);

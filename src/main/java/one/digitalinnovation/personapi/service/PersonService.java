@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor(onConstructor_= {@Autowired})
 public class PersonService {
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
     public MessageResponseDTO createPerson(PersonDTO personDTO) {
         Person personToSave = personMapper.toModel(personDTO);
-
         Person savedPerson = personRepository.save(personToSave);
+
         return createMessageResponse(savedPerson.getId(), "Create person with ID: ");
     }
 

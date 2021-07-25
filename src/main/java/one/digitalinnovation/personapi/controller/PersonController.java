@@ -31,11 +31,13 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public PersonDTO findById(@PathVariable Long id) throws PersonNotFoundException {
         return personService.findById(id);
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public MessageResponseDTO updateById (@PathVariable Long id, @RequestBody PersonDTO personDTO) throws PersonNotFoundException {
         return personService.updateById(id, personDTO);
     }

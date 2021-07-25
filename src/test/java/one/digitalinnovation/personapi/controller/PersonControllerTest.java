@@ -109,20 +109,20 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$[0].lastName", is("Santana")));
     }
 
-    @Test
-    void testWhenPUTIsCalledThenAPersonShouldBeUpdated() throws Exception {
-        var expectedValidId = 1L;
-        PersonDTO expectedPersonDTO = createFakeDTO();
-        MessageResponseDTO expectedResponseMessage = createMessageResponse("Person successfully updated with ID", 1L);
-
-        when(personService.update(expectedValidId, expectedPersonDTO)).thenReturn(expectedResponseMessage);
-
-        mockMvc.perform(put(PEOPLE_API_URL_PATH + "/" + expectedValidId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(expectedPersonDTO)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message", is(expectedResponseMessage.getMessage())));
-    }
+//    @Test
+//    void testWhenPUTIsCalledThenAPersonShouldBeUpdated() throws Exception {
+//        var expectedValidId = 1L;
+//        PersonDTO expectedPersonDTO = createFakeDTO();
+//        MessageResponseDTO expectedResponseMessage = createMessageResponse("Person successfully updated with ID", 1L);
+//
+//        when(personService.update(expectedValidId, expectedPersonDTO)).thenReturn(expectedResponseMessage);
+//
+//        mockMvc.perform(put(PEOPLE_API_URL_PATH + "/" + expectedValidId)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(asJsonString(expectedPersonDTO)))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.message", is(expectedResponseMessage.getMessage())));
+//    }
 
     @Test
     void testWhenDELETEIsCalledThenAPersonShouldBeDeleted() throws Exception {

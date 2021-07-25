@@ -3,9 +3,7 @@ package one.digitalinnovation.personapi.controller;
 import lombok.AllArgsConstructor;
 import one.digitalinnovation.personapi.dto.request.PersonDTO;
 import one.digitalinnovation.personapi.dto.response.MessageResponseDTO;
-import one.digitalinnovation.personapi.entity.Person;
 import one.digitalinnovation.personapi.exception.PersonNotFoundException;
-import one.digitalinnovation.personapi.repository.PersonRepository;
 import one.digitalinnovation.personapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/people")
+@AllArgsConstructor(onConstructor_= {@Autowired})
 public class PersonController {
 
     private PersonService personService;
-
-    @Autowired
-    public PersonController(PersonService personService) {
-        this.personService = personService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -39,6 +33,11 @@ public class PersonController {
     @GetMapping("/{id}")
     public PersonDTO findById(@PathVariable Long id) throws PersonNotFoundException {
         return personService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public MessageResponseDTO updateById (@PathVariable Long id, @RequestBody PersonDTO personDTO) throws PersonNotFoundException {
+        return personService.updateById(id, personDTO);
     }
 
     @DeleteMapping("/{id}")
